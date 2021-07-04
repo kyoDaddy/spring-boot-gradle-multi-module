@@ -1,0 +1,49 @@
+buildscript {
+    ext {
+        springBootVersion = '2.4.5'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        //classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'basic'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = 11
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        /* lombok */
+        implementation 'org.projectlombok:lombok'
+        // ..모듈들이 공통적으로 사용
+    }
+
+    task hello {
+        doLast {
+            task -> println "I'm $task.project.name"
+        }
+    }
+
+}
+
+project(':basic-api') {
+    dependencies {
+        implementation project(':basic-entity')
+    }
+}

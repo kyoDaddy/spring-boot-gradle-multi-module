@@ -1,0 +1,58 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  port: 8081
+  shutdown:
+    grace-period: 5000
+
+spring:
+  pid:
+    file: boot.pid
+  application:
+    name: basic-api
+  devtools:
+    livereload:
+      enabled: true
+  config:
+    import: classpath:daemon.yml, classpath:missing-on-profile.yml
+  profiles:
+    include:
+      - daemon
+    group:
+      local: daemon-local
+      dev: daemon-dev
+      live: daemon-live
+
+logging:
+  dir: C:/logs/${spring.application.name}
+
+log:
+  trace:
+    file:
+      name: trace
+      path: ${logging.dir}
+  business:
+    file:
+      name: business
+      path: ${logging.dir}
+
+
+---
+app.name: local
+
+
+---
+app.name: dev
+
+
+---
+app.name: stage
+
+
+---
+app.name: live
+
+
+---
+### 프로파일 선언 없이 사용하는 상황이 벌어지지 않길 바란다!!
+app.name: Oh~ NO~~

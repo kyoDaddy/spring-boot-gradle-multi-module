@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- aplication.yml에 정의한 log dir 데이터를 정의합니다 -->
+    <springProperty scope="context" name="springAppName" source="spring.application.name" defaultValue="basic" />
+    <springProperty name="TRACE_LOG_FILE_PATH" source="log.trace.file.path" defaultValue="." />
+    <springProperty name="TRACE_LOG_FILE_NAME" source="log.trace.file.name" defaultValue="trace" />
+    <springProperty name="BUSINESS_LOG_FILE_PATH" source="log.business.file.path" defaultValue="." />
+    <springProperty name="BUSINESS_LOG_FILE_NAME" source="log.business.file.name" defaultValue="business" />
+
+    <!-- logback에 대한 기본적인 설정을 base.xml을 통해서 제공함.console,file appender 를 base.xml에 include 하고 있음-->
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <!--include resource="org/springframework/boot/logging/logback/console-appender.xml" /-->
+
+    <!--appender는 출력을 담달하는데 정의에 따라서 통신, 이메일 파일출력등이 가능-->
+    <!--Tcp 통신하는 것 같고, 공식문서를 보니 비동기라고 함! -->
+    <appender name="TRACE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender" >
+        <file>${TRACE_LOG_FILE_PATH}/${TRACE_LOG_FILE_NAME}.log</file>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>
+                        {
+                        "level": "%level",
+                        "service": "${springAppName:-}",
+                        "tread": "%thread",
+                        "class": "%logger{40}",
+                        "log": "%message",
+                        "timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.sss'Z'}"
+                        }
+                    </pattern>
+                </pattern>
+                <logstashMarkers />
+                <throwableClassName>
+                    <fieldName>exception</fieldName>
+                </throwableClassName>
+                <throwableRootCauseClassName>
+                    <fieldName>rootException</fieldName>
+                </throwableRootCauseClassName>
+            </providers>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${TRACE_LOG_FILE_PATH}/${TRACE_LOG_FILE_NAME}_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!--com.basic 는 패키지명 해당 패키지는 INFO 레벨 이상이면, CONSOLE과 LOGSTASH 설정을 참고함. -->
+    <logger name="com.basic" level="INFO" additivity="false">
+        <appender-ref ref="TRACE_LOG" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+    <!-- log4jdbc 옵션 설정 -->
+    <logger name="jdbc" level="OFF"/>
+    <!-- 커넥션 open close 이벤트를 로그로 남긴다. -->
+    <logger name="jdbc.connection" level="OFF"/>
+    <!-- SQL문만을 로그로 남기며, PreparedStatement일 경우 관련된 argument 값으로 대체된 SQL문이 보여진다. -->
+    <logger name="jdbc.sqlonly" level="OFF"/>
+    <!-- SQL문과 해당 SQL을 실행시키는데 수행된 시간 정보(milliseconds)를 포함한다. -->
+    <logger name="jdbc.sqltiming" level="OFF"/>
+    <!-- ResultSet을 제외한 모든 JDBC 호출 정보를 로그로 남긴다. 많은 양의 로그가 생성되므로 특별히 JDBC 문제를 추적해야 할 필요가 있는 경우를 제외하고는 사용을 권장하지 않는다. -->
+    <logger name="jdbc.audit" level="OFF"/>
+    <!-- ResultSet을 포함한 모든 JDBC 호출 정보를 로그로 남기므로 매우 방대한 양의 로그가 생성된다. -->
+    <logger name="jdbc.resultset" level="OFF"/>
+    <!-- SQL 결과 조회된 데이터의 table을 로그로 남긴다. -->
+    <logger name="jdbc.resultsettable" level="OFF"/>
+
+    <!-- TRACE > DEBUG > INFO > WARN > ERROR, 대소문자 구분 안함 -->
+    <!-- root는 전역으로 INFO 레벨 이상인 로그만 남기고 있다.-->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+</configuration>
