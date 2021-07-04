@@ -9,7 +9,7 @@ daemon:
 spring.config.activate.on-profile: daemon-local
 daemon:
   nick-name: Developer local
-  root-uri: "http://local.com:8081"
+  root-uri: "http://locahost:8081"
 
 
 ---
