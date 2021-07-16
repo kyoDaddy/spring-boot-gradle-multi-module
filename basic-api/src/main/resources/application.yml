@@ -24,26 +24,49 @@ spring:
       live: daemon-live
   datasource:
       hikari:
-        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-        jdbc-url: jdbc:log4jdbc:mariadb://localhost:49168/book?characterEncoding=UTF-8&serverTimezone=UTC
-        username: kyo
-        password: woduf8948!
-        auto-commit: false
-        connection-test-query: SELECT 1
-        minimum-idle: 10
-        maximum-pool-size: 50
-        transaction-isolation: TRANSACTION_READ_UNCOMMITTED
-        pool-name: pool-book
+        book:
+          driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+          jdbc-url: jdbc:log4jdbc:mariadb://localhost:49168/book?characterEncoding=UTF-8&serverTimezone=UTC
+          username: kyo
+          password: woduf8948!
+          auto-commit: false
+          connection-test-query: SELECT 1
+          minimum-idle: 10
+          maximum-pool-size: 50
+          transaction-isolation: TRANSACTION_READ_UNCOMMITTED
+          pool-name: pool-book
+        test:
+          driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+          jdbc-url: jdbc:log4jdbc:mariadb://localhost:49168/test?characterEncoding=UTF-8&serverTimezone=UTC
+          username: kyo
+          password: woduf8948!
+          auto-commit: false
+          connection-test-query: SELECT 1
+          minimum-idle: 10
+          maximum-pool-size: 50
+          transaction-isolation: TRANSACTION_READ_UNCOMMITTED
+          pool-name: pool-test
   jpa:
-    database-platform: org.hibernate.dialect.MariaDB103Dialect
-    properties:
-      hibernate:
-        format_sql: true
-        hbm2ddl.auto: update
-        implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-        physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-      open-in-view: false
-      show-sql: true
+    book:
+      database-platform: org.hibernate.dialect.MariaDB103Dialect
+      properties:
+        hibernate:
+          format_sql: true
+          hbm2ddl.auto: update
+          implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+          physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        open-in-view: false
+        show-sql: true
+    test:
+      database-platform: org.hibernate.dialect.MariaDB103Dialect
+      properties:
+        hibernate:
+          format_sql: true
+          hbm2ddl.auto: update
+          implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+          physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        open-in-view: false
+        show-sql: true
 
 
 logging:

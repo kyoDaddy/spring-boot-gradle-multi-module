@@ -15,12 +15,10 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 
 /**
@@ -33,54 +31,54 @@ import javax.sql.DataSource;
  *
  */
 @Configuration
-@EnableJpaRepositories(basePackages = "com.basic.process.repository.book", entityManagerFactoryRef = "book-emf", transactionManagerRef = "book-tm")
-@MapperScan(basePackages = {"com.basic.process.mappers.book"}, sqlSessionFactoryRef = "book-ssf", sqlSessionTemplateRef = "book-sst")
-public class BookConfig {
+@EnableJpaRepositories(basePackages = "com.basic.process.repository.test", entityManagerFactoryRef = "test-emf", transactionManagerRef = "test-tm")
+@MapperScan(basePackages = {"com.basic.process.mappers.test"}, sqlSessionFactoryRef = "test-ssf", sqlSessionTemplateRef = "test-sst")
+public class TestConfig {
 
-    @Bean(name="book-ds")
-    @ConfigurationProperties(prefix = "spring.datasource.hikari.book")
+    @Bean(name="test-ds")
+    @ConfigurationProperties(prefix = "spring.datasource.hikari.test")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }
 
-    @Bean(name = "book-jpa-prop")
-    @ConfigurationProperties(prefix = "spring.jpa.book")
+    @Bean(name = "test-jpa-prop")
+    @ConfigurationProperties(prefix = "spring.jpa.test")
     public JpaProperties jpaProperties() {
         return new JpaProperties();
     }
 
-    @Bean(name = "book-emf")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("book-ds") DataSource primaryDataSource,
-                                                                       @Qualifier("book-jpa-prop") JpaProperties jpaProperties) {
-
+    @Bean(name = "test-emf")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("test-ds") DataSource primaryDataSource,
+                                                                       @Qualifier("test-jpa-prop") JpaProperties jpaProperties) {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(primaryDataSource);
         emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        emf.setPackagesToScan("com.basic.process.models.entities.book");
+        emf.setPackagesToScan("com.basic.process.models.entities.test");
         emf.setJpaPropertyMap(jpaProperties.getProperties());
         emf.setPersistenceUnitName("default");
 
         return emf;
     }
 
-    @Bean(name = "book-tm")
-    public PlatformTransactionManager transactionManager(@Qualifier("book-emf") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
+    @Bean(name = "test-tm")
+    public PlatformTransactionManager transactionManager(
+            @Qualifier("test-emf") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager(entityManagerFactory.getObject());
         transactionManager.setNestedTransactionAllowed(true);
         return transactionManager;
     }
 
-    @Bean(name="book-ssf")
-    public SqlSessionFactory sqlSessionFactory(@Qualifier("book-ds") DataSource dataSource) throws Exception {
+    @Bean(name="test-ssf")
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("test-ds") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
-        sqlSessionFactoryBean.setTypeAliasesPackage("com.basic.process.models.vo.book");
-        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/mapper/book/*-mapper.xml"));
+        sqlSessionFactoryBean.setTypeAliasesPackage("com.basic.process.models.vo.test");
+        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/mapper/test/*-mapper.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
-    @Bean(name = "book-sst")
-    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("book-ssf") SqlSessionFactory sqlSessionFactory) {
+    @Bean(name = "test-sst")
+    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("test-ssf") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 

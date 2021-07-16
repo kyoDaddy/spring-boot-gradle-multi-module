@@ -38,12 +38,14 @@ public class ControllerInterceptor implements HandlerInterceptor {
         try {
             Map<String, String> parameterMap = new HashMap<String, String>();
 
+            /*
             log.append("\r\n");
             Enumeration headerNames = request.getHeaderNames();
             while(headerNames.hasMoreElements()) {
                 String key = (String)headerNames.nextElement();
                 log.append( key + ":" + request.getHeader(key) + "\r\n" );
             }
+            */
 
             request.setAttribute("parametersMap", parameterMap);
             request.setAttribute("logSb", log);
