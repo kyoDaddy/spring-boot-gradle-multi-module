@@ -1,12 +1,7 @@
 package com.basic.process.repository.book;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.basic.process.models.entities.book.User;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends Repository<User, Long> {
-    Optional<List<User>> findAll();
-    Optional<User> findById(Long userSeq);
+public interface UserRepository extends JpaRepository<User, Long> {
 }
