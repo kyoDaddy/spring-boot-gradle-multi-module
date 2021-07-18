@@ -22,6 +22,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
+import java.util.Iterator;
 
 /**
  *  1. @EnableJpaRepositories
@@ -52,6 +53,11 @@ public class BookConfig {
     @Bean(name = "book-emf")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("book-ds") DataSource primaryDataSource,
                                                                        @Qualifier("book-jpa-prop") JpaProperties jpaProperties) {
+        /*
+        for( String key : jpaProperties.getProperties().keySet() ){
+            System.out.println( String.format("키 : %s, 값 : %s", key, jpaProperties.getProperties().get(key)) );
+        }
+        */
 
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(primaryDataSource);

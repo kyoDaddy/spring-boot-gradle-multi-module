@@ -48,25 +48,25 @@ spring:
           pool-name: pool-test
   jpa:
     book:
-      database-platform: org.hibernate.dialect.MariaDB103Dialect
+      database-platform: org.hibernate.dialect.MariaDB105Dialect
       properties:
         hibernate:
           format_sql: true
           hbm2ddl.auto: update
           implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
           physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-        open-in-view: false
-        show-sql: true
+          open-in-view: false
+          show-sql: true
     test:
-      database-platform: org.hibernate.dialect.MariaDB103Dialect
+      database-platform: org.hibernate.dialect.MariaDB105Dialect
       properties:
         hibernate:
           format_sql: true
           hbm2ddl.auto: update
           implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
           physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-        open-in-view: false
-        show-sql: true
+          open-in-view: false
+          show-sql: true
 
 
 logging:
