@@ -1,11 +1,6 @@
 # 스프링 부트 2.4 이전에는 default 영역으로 인식되었지만,
 # 스프링 부트 2.4 부터는 제일 마지막 정의된 내용으로 덮어씌워진다.
 
-daemon:
-  nick-name: daemon
-  root-uri: "http://locahost:8081"
-
----
 spring.config.activate.on-profile: daemon-local
 daemon:
   nick-name: Developer local

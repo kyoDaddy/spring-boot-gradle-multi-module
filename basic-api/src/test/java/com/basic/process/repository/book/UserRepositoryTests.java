@@ -22,7 +22,7 @@ public class UserRepositoryTests {
     @Test
     public void crate() {
 
-        User user = new User("테스트2", "test@test.com");
+        User user = new User(null,"테스트2", "test@test.com");
         User created = userRepository.save(user);
 
         System.out.println(created.toString());
@@ -38,9 +38,7 @@ public class UserRepositoryTests {
     public void del() {
 
         Long userSeq = 48L;
-
-        User user = new User("테스트2", "test@test.com");
-        user.setUserSeq(userSeq);
+        User user = new User(userSeq,"테스트2", "test@test.com");
 
         userRepository.findById(userSeq)
                 .map(user1 -> {

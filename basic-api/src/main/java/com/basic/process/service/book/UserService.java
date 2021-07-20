@@ -19,19 +19,17 @@ public class UserService {
 
     private final UserMapper userMapper;
 
-    public Optional<User> selectById(Long id) {
-        return userRepository.findById(id);
-    }
+    /** 전체 회원 목록 반환 */
+    public List<User> findAll() { return userRepository.findAll(); }
+    /** 단건 회원 반환 */
+    public Optional<User> findById(Long id) { return userRepository.findById(id); }
 
     /**
      * 다중으로 호출시 -> @Transactional 메서드를 내부적으로 사용하지 않는것이 근본적인 해결책
      * @param user
      */
     @Transactional
-    public void addUser(User user) {
-        user.setDel(true);
-        userRepository.save(user);
-    }
+    public User save(User user) { return userRepository.save(user); }
 
     public List<UserVo> selectUser(UserVo vo) {
         return userMapper.selectUser(vo);
@@ -41,5 +39,7 @@ public class UserService {
     public UserVo getUser(UserVo vo) {
         return userMapper.getUser(vo);
     }
+
+
 
 }

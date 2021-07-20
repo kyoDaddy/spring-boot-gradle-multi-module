@@ -20,7 +20,7 @@ public class HelloApi {
             value = CommonUrlConstants.API_PRE + "/hello/{idx}",
             method = RequestMethod.GET
     )
-    @ApiOperation(value = "안뇽~", notes = "첫 테스트 API야.")
+    @ApiOperation(value = "안뇽~", notes = "첫 테스트 API")
     public ResponseEntity<String> hello(
             HttpServletRequest request,
             @PathVariable("idx") String idx,

@@ -32,7 +32,8 @@ public class User extends BaseEntity implements Serializable {
     private String username;
 
     @Builder
-    public User(String username, String email) {
+    public User(Long userSeq, String username, String email) {
+        this.userSeq = userSeq;
         this.username = username;
         this.email = email;
     }

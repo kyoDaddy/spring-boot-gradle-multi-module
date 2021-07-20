@@ -21,6 +21,7 @@ spring:
     group:
       local: daemon-local
       dev: daemon-dev
+      stage: daemon-stage
       live: daemon-live
   datasource:
       hikari:
@@ -82,23 +83,3 @@ log:
       name: business
       path: ${logging.dir}
 
-
----
-app.name: local
-
-
----
-app.name: dev
-
-
----
-app.name: stage
-
-
----
-app.name: live
-
-
----
-### 프로파일 선언 없이 사용하는 상황이 벌어지지 않길 바란다!!
-app.name: Oh~ NO~~

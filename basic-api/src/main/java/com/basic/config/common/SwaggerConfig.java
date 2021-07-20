@@ -6,10 +6,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.async.DeferredResult;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.builders.ResponseMessageBuilder;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.schema.WildcardType;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
@@ -30,6 +33,58 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 @EnableSwagger2
 public class SwaggerConfig {
 
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.basic.process.controllers")) //.apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/api/**")) //.paths(PathSelectors.any())
+                .build()
+                .useDefaultResponseMessages(false)
+                .securitySchemes(securitySchemeList())
+                .securityContexts(singletonList(securityContext()))
+                ;
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("API 제목")
+                .description("API 상세소개 및 사용법 등")
+                .contact(new Contact("kyo", "https://github.com/kyoDaddy", "rlarbghrbgh@gmail.com"))
+                .version("1.0")
+                .build();
+    }
+
+    private List<SecurityScheme> securitySchemeList() {
+        List<SecurityScheme> list = new ArrayList<>();
+        list.add(new ApiKey("API 접근 키", "service-key", "header"));
+        list.add(new ApiKey("API 접근 아이디", "service-id", "header"));
+        return list;
+    }
+
+    private SecurityContext securityContext() {
+        return SecurityContext.builder()
+                .securityReferences(customizeAuth())
+                //.forPaths(PathSelectors.regex("/anyPath.*"))
+                .build();
+    }
+
+    private List<SecurityReference> customizeAuth() {
+        AuthorizationScope authorizationScope
+                = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+
+        return newArrayList(
+                new SecurityReference("API 접근 아이디", authorizationScopes)
+                ,new SecurityReference("API 접근 키", authorizationScopes)
+        );
+    }
+
+
+
+/*
     // autowird 경고 떠서, 생성자 주입으로 바꿈..
     // final 의 장점은 누군가가 클래스 내부에서 객체를 바꿔치기 할 수 없다.
     private final TypeResolver typeResolver;
@@ -64,14 +119,15 @@ public class SwaggerConfig {
                         )
                 )
                 .useDefaultResponseMessages(false)
-                .consumes(getConsumeContentTypes())
-                .produces(getProduceContentTypes())
+                //.consumes(getConsumeContentTypes())
+                //.produces(getProduceContentTypes())
                 .apiInfo(apiInfo())
                 .securitySchemes(securitySchemeList())
                 .securityContexts(singletonList(securityContext()))
                 .enableUrlTemplating(true);
 
-                /*
+                */
+/*
                 .globalRequestParameters(
                         singletonList(new springfox.documentation.builders.RequestParameterBuilder()
                                 .name("someGlobalParameter")
@@ -80,8 +136,10 @@ public class SwaggerConfig {
                                 .required(true)
                                 .query(q -> q.model(m -> m.scalarModel(ScalarType.STRING)))
                                 .build()));
+                *//*
+
                 */
-                /*
+/*
                 .globalResponses(HttpMethod.GET,
                         singletonList(new ResponseBuilder()
                                 .code("500")
@@ -96,24 +154,23 @@ public class SwaggerConfig {
                                                                                 .name("ERROR"))))))
                                 .build()))
 
-                 */
-                /*
+                 *//*
+
+                */
+/*
                 .tags(new Tag("Base Service", "All apis relating to base"));
+                *//*
+
                 */
-                /* request object mapping
+/* request object mapping
                 //.additionalModels(typeResolver.resolve(AdditionalModel.class));
-                */
+                *//*
+
 
 
     }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("API 제목")
-                .description("API 상세소개 및 사용법 등")
-                .version("1.0")
-                .build();
-    }
+
 
     private Set<String> getConsumeContentTypes() {
         Set<String> consumes = new HashSet<>();
@@ -188,5 +245,6 @@ public class SwaggerConfig {
                 .validatorUrl(null)
                 .build();
     }
+*/
 
 }
