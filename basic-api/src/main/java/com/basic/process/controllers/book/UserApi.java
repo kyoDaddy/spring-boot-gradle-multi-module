@@ -99,48 +99,4 @@ public class UserApi {
         }
     }
 
-
-/*
-    @GetMapping("/{userSeq}")
-    public ResponseEntity<String> selectUserById(
-            HttpServletRequest request,
-            @PathVariable("userSeq") long userSeq
-    ) {
-
-        StringBuffer log = (StringBuffer) request.getAttribute("logSb");
-        log.append(userSeq + "\r\n");
-
-        Optional<User> oUser = userService.selectById(userSeq);
-        JsonObject jObj = new JsonObject();
-
-        if(oUser.isPresent()) {
-            jObj.addProperty("userSeq", oUser.get().getUsername());
-        }
-        else {
-            jObj.addProperty("userSeq", 0);
-        }
-
-        return new ResponseEntity<>(jObj.toString(), HttpStatus.OK);
-    }
-
-
-
-    @PostMapping("/")
-    public ResponseEntity<String> getUser(HttpServletRequest request) {
-        StringBuffer log = (StringBuffer) request.getAttribute("logSb");
-
-        UserVo reqVo = new UserVo();
-        reqVo.setUserSeq("46");
-
-        UserVo resVo = userService.getUser(reqVo);
-        log.append(resVo.getUserSeq() + "\r\n");
-
-        JsonObject jObj = new JsonObject();
-        jObj.addProperty("userSeq", resVo.getUserSeq());
-
-        return new ResponseEntity<>(jObj.toString(), HttpStatus.OK);
-    }
-*/
-
-
 }
