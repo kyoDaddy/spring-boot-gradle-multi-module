@@ -1,0 +1,28 @@
+apply plugin: 'com.google.protobuf'
+
+group = 'com.grpc'
+version = '0.1.0'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "net.devh:grpc-server-spring-boot-starter:${rootProject.ext.springBootGrpcVersion}"
+
+    implementation "io.grpc:grpc-netty:${rootProject.ext.grpcVersion}"
+    implementation "io.grpc:grpc-protobuf:${rootProject.ext.grpcVersion}"
+    implementation "io.grpc:grpc-stub:${rootProject.ext.grpcVersion}"
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+}
+
+test {
+    useJUnitPlatform()
+}

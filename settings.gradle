@@ -1,3 +1,5 @@
 rootProject.name = 'basic-multi'
 include 'basic-api'
 include 'basic-entity'
+include 'grpc-lib'
+include 'grpc-server'

@@ -1,26 +1,19 @@
 package com.basic.process.controllers.book;
 
-import com.basic.constants.book.BookUrlConstants;
 import com.basic.constants.common.CommonUrlConstants;
 import com.basic.process.models.entities.book.User;
 import com.basic.process.models.response.CommonResult;
 import com.basic.process.models.response.ListResult;
 import com.basic.process.models.response.SingleResult;
-import com.basic.process.models.vo.book.UserVo;
 import com.basic.process.repository.book.UserRepository;
 import com.basic.process.service.ResponseService;
 import com.basic.process.service.book.UserService;
-import com.google.gson.JsonObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.Optional;
 
 @Api(tags = {"User"})

@@ -3,6 +3,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+    /* grpc */
+    implementation "net.devh:grpc-server-spring-boot-starter:${rootProject.ext.springBootGrpcVersion}"
+
     /* logback : https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder */
     implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '6.6'
     /* DB Logback */

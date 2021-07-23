@@ -2,6 +2,11 @@ package com.basic.process.controllers.common;
 
 import com.basic.constants.common.CommonUrlConstants;
 import com.google.gson.JsonObject;
+import com.grpc.lib.HelloRequest;
+import com.grpc.lib.HelloResponse;
+import com.grpc.lib.HelloServiceGrpc;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +25,7 @@ public class HelloApi {
             value = CommonUrlConstants.API_PRE + "/hello/{idx}",
             method = RequestMethod.GET
     )
-    @ApiOperation(value = "안뇽~", notes = "첫 테스트 API")
+    @ApiOperation(value = "안뇽~", notes = "첫 GRPC 테스트 API")
     public ResponseEntity<String> hello(
             HttpServletRequest request,
             @PathVariable("idx") String idx,
@@ -30,9 +35,21 @@ public class HelloApi {
         StringBuffer log = (StringBuffer) request.getAttribute("logSb");
         log.append(idx + "(" + name + ")\r\n");
 
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9898).usePlaintext().build();
+
+        HelloServiceGrpc.HelloServiceBlockingStub stub = HelloServiceGrpc.newBlockingStub(channel);
+        HelloResponse helloResponse = stub.hello(HelloRequest.newBuilder()
+                .setFirstName(name)
+                .setLastName("kyo")
+                .setAge(Integer.parseInt(idx))
+                .build());
+
+        channel.shutdown();
+
         JsonObject jObj = new JsonObject();
         jObj.addProperty("id", idx);
         jObj.addProperty("name", name);
+        jObj.addProperty("msg", helloResponse.getGreeting());
 
         return new ResponseEntity<>(jObj.toString(), HttpStatus.OK);
     }

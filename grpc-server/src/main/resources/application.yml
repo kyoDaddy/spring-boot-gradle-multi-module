@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: grpc-server
+grpc:
+  server:
+    port: 9898
+  shutdownGrace: 30

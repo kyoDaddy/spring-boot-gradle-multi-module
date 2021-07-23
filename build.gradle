@@ -1,12 +1,16 @@
 buildscript {
     ext {
         springBootVersion = '2.4.5'
+        protocVersion = '3.13.0'
+        grpcVersion = '1.33.1'
+        springBootGrpcVersion = '2.12.0.RELEASE'
     }
     repositories {
         mavenCentral()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.17'
         //classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
     }
 }
@@ -16,7 +20,9 @@ repositories {
 }
 
 subprojects {
+
     apply plugin: 'java'
+    apply plugin: 'idea'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
@@ -45,5 +51,14 @@ subprojects {
 project(':basic-api') {
     dependencies {
         implementation project(':basic-entity')
+        implementation project(':grpc-lib')
     }
 }
+
+project(':grpc-server') {
+    dependencies {
+        implementation project(':basic-entity')
+        implementation project(':grpc-lib')
+    }
+}
+
