@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.grpc.lib";
+
+message WeatherRequest {
+  string baseDt = 1;
+  string baseTm = 2;
+}
+
+message WeatherResponse {
+  string greeting = 1;
+  bool allowed = 2;
+}
+
+service WeatherService {
+  rpc getForecast(WeatherRequest) returns (WeatherResponse);
+}

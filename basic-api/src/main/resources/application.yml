@@ -83,7 +83,6 @@ log:
       name: business
       path: ${logging.dir}
 
-
 ---
 app.name: local
 

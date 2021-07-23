@@ -17,6 +17,9 @@ dependencies {
     implementation "io.grpc:grpc-protobuf:${rootProject.ext.grpcVersion}"
     implementation "io.grpc:grpc-stub:${rootProject.ext.grpcVersion}"
 
+    /* okhttp */
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.0.0-alpha.2'
+
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }

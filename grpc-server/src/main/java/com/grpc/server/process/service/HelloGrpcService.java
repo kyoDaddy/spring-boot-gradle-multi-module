@@ -1,4 +1,4 @@
-package com.grpc.server.service;
+package com.grpc.server.process.service;
 
 import com.google.protobuf.Descriptors;
 import com.grpc.lib.HelloRequest;

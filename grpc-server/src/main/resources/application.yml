@@ -1,7 +1,13 @@
 spring:
   application:
     name: grpc-server
+
 grpc:
   server:
     port: 9898
   shutdownGrace: 30
+
+public-api:
+  weather:
+    service-url: "http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtNcst"
+    service-key: "UY3ULlYf7kmwiofcwrdho44OoJBaj6eTDw5gA3NLjoYPS86E2AKAJyErwIRBZstsZhbsxumefRsSHZPfsvNhPg%3D%3D"

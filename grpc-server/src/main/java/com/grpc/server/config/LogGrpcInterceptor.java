@@ -1,4 +1,4 @@
-package com.grpc.server.service;
+package com.grpc.server.config;
 
 import io.grpc.*;
 import org.apache.logging.log4j.CloseableThreadContext;
