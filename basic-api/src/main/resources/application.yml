@@ -83,3 +83,18 @@ log:
       name: business
       path: ${logging.dir}
 
+
+---
+app.name: local
+
+
+---
+app.name: dev
+
+
+---
+app.name: stge
+
+
+---
+app.name: live

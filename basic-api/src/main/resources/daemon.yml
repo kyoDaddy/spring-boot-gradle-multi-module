@@ -4,21 +4,27 @@
 spring.config.activate.on-profile: daemon-local
 daemon:
   nick-name: Developer local
-  root-uri: "http://locahost:8081"
+  root-uri: http://locahost:8081
+  grpc-ip: 127.0.0.1
+  grpc-port: 9898
 
 
 ---
 spring.config.activate.on-profile: daemon-dev
 daemon:
   nick-name: Developer dev
-  root-uri: "http://dev.com"
+  root-uri: http://dev.com
+  grpc-ip: 127.0.0.1
+  grpc-port: 9898
 
 
 ---
 spring.config.activate.on-profile: daemon-stage
 daemon:
   nick-name: Developer stage
-  root-uri: "http://stage.com"
+  root-uri: http://stage.com
+  grpc-ip: 127.0.0.1
+  grpc-port: 9898
 
 
 ---
@@ -26,4 +32,6 @@ daemon:
 spring.config.activate.on-profile: daemon-live
 daemon:
   nick-name: Developer live
-  root-uri: "http://live.com"
+  root-uri: http://live.com
+  grpc-ip: 127.0.0.1
+  grpc-port: 9898
