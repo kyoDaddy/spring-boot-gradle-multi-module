@@ -5,6 +5,8 @@ dependencies {
 
     /* grpc */
     implementation "net.devh:grpc-server-spring-boot-starter:${rootProject.ext.springBootGrpcVersion}"
+    implementation "io.grpc:grpc-netty:${rootProject.ext.grpcVersion}"
+
 
     /* logback : https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder */
     implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '6.6'
@@ -34,15 +36,16 @@ dependencies {
     implementation "io.springfox:springfox-boot-starter:3.0.0"
     implementation "io.springfox:springfox-swagger-ui:3.0.0"
 
+    // h2
+    compileOnly 'com.h2database:h2'
+    testImplementation 'com.h2database:h2' // 테스트 의존성 추가
+
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     annotationProcessor 'org.projectlombok:lombok'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testAnnotationProcessor 'org.projectlombok:lombok'
     testCompileOnly 'org.projectlombok:lombok'
-
-    // 디렉토리에 위치한 모든 라이브러리의 의존성을 추가하는 방법
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
 }
 compileJava.inputs.files(processResources)

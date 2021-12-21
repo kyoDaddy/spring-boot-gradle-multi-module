@@ -26,8 +26,8 @@ public class LogGrpcInterceptor implements ServerInterceptor {
                      */
                     @Override
                     public void onHalfClose() {
-                        try (final CloseableThreadContext.Instance ctc = CloseableThreadContext.put("requestID",
-                                UUID.randomUUID().toString())) {
+                        try (final CloseableThreadContext.Instance ctc =
+                                     CloseableThreadContext.put("requestID", requestId)) {
                             super.onHalfClose();
                         }
                     }

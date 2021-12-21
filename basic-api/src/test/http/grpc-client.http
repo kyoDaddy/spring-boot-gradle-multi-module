@@ -1,0 +1,9 @@
+### GET Grpc Hello
+GET http://localhost:8081/api/hello/21?firstName=kyo&lastName=kim
+accept: */*
+###
+
+### GET Grpc Weather
+GET http://localhost:8081/api/weather?baseDt=20211221&baseTm=10
+accept: */*
+###

@@ -1,6 +1,6 @@
 package com.basic.process.controllers.common;
 
-import com.basic.config.prop.DaemonProp;
+import com.basic.config.prop.DaemonProperties;
 import com.basic.constants.common.CommonUrlConstants;
 import com.google.gson.JsonObject;
 import com.grpc.lib.HelloRequest;
@@ -9,6 +9,8 @@ import com.grpc.lib.HelloServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,45 +20,43 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Slf4j
 @RestController
+@RequiredArgsConstructor
 public class HelloApi {
 
-    @Autowired
-    private DaemonProp daemonProp;
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final DaemonProperties daemonProperties;
 
     @RequestMapping(
-            value = CommonUrlConstants.API_PRE + "/hello/{idx}",
+            value = CommonUrlConstants.API_PRE + "/hello/{age}",
             method = RequestMethod.GET
     )
     @ApiOperation(value = "안뇽~", notes = "첫 GRPC 테스트 API")
     public ResponseEntity<String> hello(
             HttpServletRequest request,
-            @PathVariable("idx") String idx,
-            @RequestParam(value="name", required = false) String name
+            @PathVariable("age") Integer age,
+            @RequestParam(value="firstName", required = true) String firstName,
+            @RequestParam(value="lastName", required = true) String lastName
     ) {
 
-        StringBuffer log = (StringBuffer) request.getAttribute("logSb");
-        log.append(idx + "(" + name + ")\r\n");
+        log.info("age:{}, name:({} {})", age, firstName, lastName);
+        log.info("grpc call {}:{}", daemonProperties.getGrpcIp(), daemonProperties.getGrpcPort());
 
-        log.append(daemonProp.getGrpcIp() + "\n");
-        log.append(daemonProp.getGrpcPort() + "\n");
-
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(daemonProp.getGrpcIp(), daemonProp.getGrpcPort()).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(daemonProperties.getGrpcIp(), daemonProperties.getGrpcPort()).usePlaintext().build();
 
         HelloServiceGrpc.HelloServiceBlockingStub stub = HelloServiceGrpc.newBlockingStub(channel);
         HelloResponse helloResponse = stub.hello(HelloRequest.newBuilder()
-                .setFirstName(name)
-                .setLastName("kyo")
-                .setAge(Integer.parseInt(idx))
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setAge(age)
                 .build());
 
         channel.shutdown();
 
         JsonObject jObj = new JsonObject();
-        jObj.addProperty("id", idx);
-        jObj.addProperty("name", name);
+        jObj.addProperty("age", age);
+        jObj.addProperty("firstName", firstName);
+        jObj.addProperty("lastName", lastName);
         jObj.addProperty("msg", helloResponse.getGreeting());
 
         return new ResponseEntity<>(jObj.toString(), HttpStatus.OK);

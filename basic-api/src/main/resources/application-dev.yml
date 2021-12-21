@@ -11,19 +11,14 @@ spring:
       enabled: true
   config:
     activate:
-      on-profile: local
-
-  # setting local embedded-h2
-  h2:
-    console:
-      enabled: false
+      on-profile: dev
   datasource:
       hikari:
         book:
-          driver-class-name: org.h2.Driver
-          jdbc-url: jdbc:h2:mem:book;DB_CLOSE_DELAY=-1;MODE=MYSQL;DATABASE_TO_LOWER=TRUE;
-          username: sa
-          password:
+          driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+          jdbc-url: jdbc:log4jdbc:mariadb://localhost:49168/book?characterEncoding=UTF-8&serverTimezone=UTC
+          username: kyo
+          password: test!1234
           auto-commit: false
           connection-test-query: SELECT 1
           minimum-idle: 10
@@ -31,38 +26,37 @@ spring:
           transaction-isolation: TRANSACTION_READ_UNCOMMITTED
           pool-name: pool-book
         test:
-          driver-class-name: org.h2.Driver
-          jdbc-url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;MODE=MYSQL;DATABASE_TO_LOWER=TRUE;
-          username: sa
-          password:
+          driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+          jdbc-url: jdbc:log4jdbc:mariadb://localhost:49168/test?characterEncoding=UTF-8&serverTimezone=UTC
+          username: kyo
+          password: test!1234
           auto-commit: false
           connection-test-query: SELECT 1
           minimum-idle: 10
           maximum-pool-size: 50
           transaction-isolation: TRANSACTION_READ_UNCOMMITTED
           pool-name: pool-test
-
   jpa:
     book:
-      database-platform: org.hibernate.dialect.H2Dialect
+      database-platform: org.hibernate.dialect.MariaDB105Dialect
       properties:
         hibernate:
-          hbm2ddl.auto: create-drop
+          format_sql: true
+          hbm2ddl.auto: update
           implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
           physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
           open-in-view: false
           show-sql: true
-          format_sql: true
     test:
-      database-platform: org.hibernate.dialect.H2Dialect
+      database-platform: org.hibernate.dialect.MariaDB105Dialect
       properties:
         hibernate:
-          hbm2ddl.auto: create-drop
+          format_sql: true
+          hbm2ddl.auto: update
           implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
           physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
           open-in-view: false
           show-sql: true
-          format_sql: true
 
 server:
   tomcat:
@@ -72,7 +66,7 @@ server:
     grace-period: 5000
 
 logging:
-  dir: D:/log/${spring.application.name}
+  dir: /var/log/${spring.application.name}/
 
 log:
   trace:
@@ -88,5 +82,4 @@ daemon:
   nick-name: kyo ${spring.config.activate.on-profile}
   root-uri: http://locahost:${server.port}
   grpc-ip: 127.0.0.1
-  grpc-port: 9898
-
+  grpc-port: 9899

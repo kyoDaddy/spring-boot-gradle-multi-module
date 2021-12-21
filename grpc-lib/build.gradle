@@ -9,9 +9,6 @@ buildscript {
 
 apply plugin: 'com.google.protobuf'
 
-sourceCompatibility = '11'
-targetCompatibility = '11'
-
 repositories {
     mavenLocal()
     maven { // The google mirror is less flaky than mavenCentral()
@@ -75,6 +72,10 @@ task syncProtoGen(type: Sync) {
 }
 
 /* 변경시 jar 빌드 필요 - 자동으로 jar 생성되게 만들어야할 필요 있음 */
+bootJar {
+    enabled = false
+}
+
 jar {
     enabled = true
 }

@@ -1,6 +1,6 @@
 package com.basic;
 
-import com.basic.config.prop.DaemonProp;
+import com.basic.config.prop.DaemonProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,7 +8,7 @@ import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
-@EnableConfigurationProperties(DaemonProp.class)
+@EnableConfigurationProperties(DaemonProperties.class)
 public class BasicApiApplication {
 
     public static void main(String[] args) {

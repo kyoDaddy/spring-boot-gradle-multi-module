@@ -1,9 +1,6 @@
 package com.basic.config.common;
 
-import com.basic.config.interceptor.ControllerInterceptor;
-import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 
@@ -18,20 +15,8 @@ import org.springframework.web.servlet.config.annotation.*;
  *      -> Spring Boot Web MVC 기본 설정에서 정적 리소스를 제공한다. 정적 리소스란 웹 브라우저에서 요청이 들어왔을 때 이미 만들어져있는 리소스
  */
 @Configuration
-@RequiredArgsConstructor
+@Slf4j
 public class WebConfig implements WebMvcConfigurer {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    /* @RequiredArgsConstructor 통한 생성자 주입 */
-    private final ControllerInterceptor interceptor;
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(interceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/**/*.ico");
-    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {

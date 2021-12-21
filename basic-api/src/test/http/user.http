@@ -1,0 +1,22 @@
+### Post User Register
+POST http://localhost:8081/api/v1/book/user?email=rlarbghrbgh@gmail.com&name=kyo
+###
+
+### Get User
+GET http://localhost:8081/api/v1/book/user/1
+accept: */*
+###
+
+### Put User Update
+PUT http://localhost:8081/api/v1/book/user?email=rlarbghrbgh%40gmail.com&name=test2&userSeq=1
+accept: */*
+###
+
+### Delete User
+DELETE http://localhost:8081/api/v1/book/user/1
+accept: */*
+###
+
+
+
+

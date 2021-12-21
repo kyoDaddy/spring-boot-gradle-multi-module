@@ -1,17 +1,26 @@
 buildscript {
     ext {
-        springBootVersion = '2.4.5'
+        springBootVersion = '2.4.11'
+
         protocVersion = '3.13.0'
+        protobufGradlePluginVersion = '0.8.17'
+
         grpcVersion = '1.33.1'
         springBootGrpcVersion = '2.12.0.RELEASE'
+
+        gsonVersion = '2.8.9'
+
+        mapstructVersion = '1.4.2.Final'
+        mapstructBindingVersion = '0.2.0'
+
+        lombokVersion = '1.18.20'
     }
     repositories {
         mavenCentral()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.17'
-        //classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
+        classpath "com.google.protobuf:protobuf-gradle-plugin:${protobufGradlePluginVersion}"
     }
 }
 
@@ -22,22 +31,49 @@ repositories {
 subprojects {
 
     apply plugin: 'java'
+    apply plugin: 'eclipse'
     apply plugin: 'idea'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
     group = 'basic'
-    version = '0.0.1-SNAPSHOT'
-    sourceCompatibility = 11
+    version = '1.0.0'
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+
+    // 해당 task로 서브 모듈 추가시 기초적인 디렉토리를 자동으로 생성
+    task initSourceFolders {
+        sourceSets*.java.srcDirs*.each {
+            if( !it.exists() ) {
+                it.mkdirs()
+            }
+        }
+        sourceSets*.resources.srcDirs*.each {
+            if( !it.exists() ) {
+                it.mkdirs()
+            }
+        }
+    }
 
     repositories {
         mavenCentral()
     }
 
+    // 서브 모듈에 공통으로 의존성을 추가 시킬 디펜던시를 정의
     dependencies {
         /* lombok */
         implementation 'org.projectlombok:lombok'
-        // ..모듈들이 공통적으로 사용
+        testImplementation 'org.projectlombok:lombok' // 테스트 의존성 추가
+        testAnnotationProcessor 'org.projectlombok:lombok' // 테스트 의존성 추가
+
+        // gson
+        implementation "com.google.code.gson:gson:${gsonVersion}"
+
+        // mapstruct
+        implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+        annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${mapstructBindingVersion}"
     }
 
     task hello {
@@ -48,6 +84,7 @@ subprojects {
 
 }
 
+// project 정의 및 공통으로 사용되는 core 모듈을 추가
 project(':basic-api') {
     dependencies {
         implementation project(':basic-entity')

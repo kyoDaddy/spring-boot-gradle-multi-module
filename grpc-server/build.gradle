@@ -1,8 +1,9 @@
 apply plugin: 'com.google.protobuf'
 
 group = 'com.grpc'
-version = '0.1.0'
+version = '1.0.0'
 sourceCompatibility = '11'
+targetCompatibility = '11'
 
 repositories {
     mavenCentral()

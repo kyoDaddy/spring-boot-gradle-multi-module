@@ -1,6 +1,6 @@
 package com.basic.process.controllers.common;
 
-import com.basic.config.prop.DaemonProp;
+import com.basic.config.prop.DaemonProperties;
 import com.basic.constants.common.CommonUrlConstants;
 import com.google.gson.JsonObject;
 import com.grpc.lib.*;
@@ -22,7 +22,7 @@ import javax.validation.constraints.Min;
 public class WeatherApi {
 
     @Autowired
-    private DaemonProp daemonProp;
+    private DaemonProperties daemonProperties;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -40,10 +40,10 @@ public class WeatherApi {
         StringBuffer log = (StringBuffer) request.getAttribute("logSb");
         log.append(baseDt + " " + baseTm + ")\r\n");
 
-        log.append(daemonProp.getGrpcIp() + "\n");
-        log.append(daemonProp.getGrpcPort() + "\n");
+        log.append(daemonProperties.getGrpcIp() + "\n");
+        log.append(daemonProperties.getGrpcPort() + "\n");
 
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(daemonProp.getGrpcIp(), daemonProp.getGrpcPort()).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(daemonProperties.getGrpcIp(), daemonProperties.getGrpcPort()).usePlaintext().build();
 
         WeatherServiceGrpc.WeatherServiceBlockingStub stub = WeatherServiceGrpc.newBlockingStub(channel);
         WeatherResponse weatherResponse = stub.getForecast(WeatherRequest.newBuilder()

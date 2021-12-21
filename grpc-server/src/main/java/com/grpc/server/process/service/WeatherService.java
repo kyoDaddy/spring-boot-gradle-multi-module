@@ -7,6 +7,7 @@ import com.grpc.lib.WeatherRequest;
 import com.grpc.lib.WeatherResponse;
 import com.grpc.lib.WeatherServiceGrpc;
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -21,10 +22,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 
+@Slf4j
 @GrpcService
 public class WeatherService extends WeatherServiceGrpc.WeatherServiceImplBase {
-
-    private static final Logger logger = LoggerFactory.getLogger(WeatherService.class);
 
     // static 은 bean 보다 생성이 빨리 되서 null로 호출됨
     @Value("${public-api.weather.service-url}")
@@ -37,17 +37,12 @@ public class WeatherService extends WeatherServiceGrpc.WeatherServiceImplBase {
     @Override
     public void getForecast(WeatherRequest request, StreamObserver<WeatherResponse> responseObserver) {
 
-        StringBuffer log = new StringBuffer();
-        log.append("\n");
-        log.append("===================================================================\n");
         Map<Descriptors.FieldDescriptor, Object> map = request.getAllFields();
         Iterator<Descriptors.FieldDescriptor> it = map.keySet().iterator();
         while(it.hasNext()) {
             Descriptors.FieldDescriptor fd = it.next();
-            log.append("Request " + fd.getJsonName() + "=" + map.get(fd) + "\n" );
+            log.info("Request [{}={}]", fd.getJsonName(), map.get(fd));
         }
-        log.append("===================================================================\n");
-        logger.info(log.toString());
 
         String resStr = null;
 

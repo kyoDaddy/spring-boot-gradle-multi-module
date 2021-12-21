@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "daemon")
-public class DaemonProp {
+public class DaemonProperties {
 
     private String nickName;
     private String rootUri;

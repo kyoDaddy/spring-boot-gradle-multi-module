@@ -5,6 +5,7 @@ import com.grpc.lib.HelloRequest;
 import com.grpc.lib.HelloResponse;
 import com.grpc.lib.HelloServiceGrpc;
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Iterator;
 import java.util.Map;
 
+@Slf4j
 @GrpcService
 public class HelloGrpcService extends HelloServiceGrpc.HelloServiceImplBase {
 
@@ -20,17 +22,13 @@ public class HelloGrpcService extends HelloServiceGrpc.HelloServiceImplBase {
     @Override
     public void hello(HelloRequest request, StreamObserver<HelloResponse> responseObserver) {
 
-        StringBuffer log = new StringBuffer();
-        log.append("\n");
-        log.append("===================================================================\n");
         Map<Descriptors.FieldDescriptor, Object> map = request.getAllFields();
         Iterator<Descriptors.FieldDescriptor> it = map.keySet().iterator();
         while(it.hasNext()) {
             Descriptors.FieldDescriptor fd = it.next();
-            log.append("Request " + fd.getJsonName() + "=" + map.get(fd) + "\n" );
+            log.info("Request [{}={}]", fd.getJsonName(), map.get(fd));
         }
-        log.append("===================================================================\n");
-        logger.info(log.toString());
+
 
         HelloResponse helloResponse = HelloResponse.newBuilder()
                 .setAllowed(request.getAge() > 20)
