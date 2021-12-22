@@ -1,13 +1,11 @@
 # spring-boot-gradle-multi-module 
-spring boot gradle multi module skeleton code 작성하여, 초기 설정을 공부
-1. 목적 : 초기 구성을 통한 타 프로젝트 동일 스펙 개발시 참고
+1. 목적 : gradle multi module + grpc skeleton code 작성하여. 사용법 습득
 2. 참고 레퍼런스
     1. [Spring Boot Multi Module, Gradle, JPA](https://youngthugg.tistory.com/37)
     2. [Gradle 기반 멀티 모듈 구성하기](https://cheese10yun.github.io/gradle-multi-module/)
     3. [GRPC documentation](https://grpc.io/docs/languages/java/)
     4. [Grpc 사용법](https://velog.io/@chb1828/Spring-boot%EB%A1%9C-Grpc%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EC%9E%90)
     5. [공공 open api 사용](https://oopsys.tistory.com/265)
-    6. 
 
 
 ## 로컬 환경 설정
@@ -28,6 +26,7 @@ spring boot gradle multi module skeleton code 작성하여, 초기 설정을 공
           ````
     3. after build
        > ![after-build.PNG](desc/after-build.png)
+
 
 ## 개발 적용 사항
 * spring-boot 2.4.11
