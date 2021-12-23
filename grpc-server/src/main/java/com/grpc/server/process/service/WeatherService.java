@@ -52,15 +52,16 @@ public class WeatherService extends WeatherServiceGrpc.WeatherServiceImplBase {
             String baseTm = Objects.isNull(request.getBaseTm()) ? DateUtils.getDate("HHmm") : request.getBaseTm();
 
             // 공공데이터 API URL 세팅
+            // 국지예보모델단일면한반도조회 : 기상청에서 운영하는 수치예보모델중 국지예보모델의 단일면 한반도 데이터를 조회하는 기능
             StringBuffer url = new StringBuffer();
-            url.append(this.SERVICE_URL);
-            url.append("?ServiceKey=" + this.SERVICE_KEY);
-            url.append("&pageNo=1&numOfRows=100");
-            url.append("&dataType=" + this.SERVICE_DATA_TYPE);
-            url.append("&base_date=" + baseDt);
-            url.append("&base_time=" + baseTm);
-            url.append("&nx=1");
-            url.append("&ny=1");
+            url.append(SERVICE_URL);
+            url.append("?serviceKey=" + SERVICE_KEY); // 인증키
+            url.append("&dataType=JSON"); // 요청자료형식(XML/JSON)
+            url.append("&baseTime=" + baseDt + "0300");
+            url.append("&pageNo=1"); // 페이지 번호
+            url.append("&numOfRows=10"); // 한 페이지 결과 수
+            url.append("&leadHour=1");  // 선행시간
+            url.append("&dataTypeCd=Temp"); // 데이터타입 (Temp:기온, Humi:습도, Wspd:풍속, Wdir:풍향, Rain:강수량)
 
             OkHttpClient client = new OkHttpClient().newBuilder()
                     .build();

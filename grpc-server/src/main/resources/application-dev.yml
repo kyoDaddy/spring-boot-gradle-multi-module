@@ -12,5 +12,5 @@ grpc:
 
 public-api:
   weather:
-    service-url: "http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtNcst"
-    service-key: "UY3ULlYf7kmwiofcwrdho44OoJBaj6eTDw5gA3NLjoYPS86E2AKAJyErwIRBZstsZhbsxumefRsSHZPfsvNhPg%3D%3D"
+    service-url: "http://apis.data.go.kr/1360000/NwpModelInfoService/getLdapsUnisAll"
+    service-key: "UY3ULlYf7kmwiofcwrdho44OoJBaj6eTDw5gA3NLjoYPS86E2AKAJyErwIRBZstsZhbsxumefRsSHZPfsvNhPg=="

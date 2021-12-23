@@ -58,6 +58,7 @@
 * grpc server/client/lib 구성
   * grpc-server 구성
     * hello sample api
-    * weather api (공공api(https://www.data.go.kr/) test 연동)
+    * weather api (정부 open api 연동)
+      - [기상청_수치모델자료(경량화) 조회서비스](https://www.data.go.kr/data/15043588/openapi.do)
     
 
