@@ -1,12 +1,5 @@
 # spring-boot-gradle-multi-module 
-1. 목적 : gradle multi module + grpc skeleton code 작성하여. 사용법 습득
-2. 참고 레퍼런스
-    1. [Spring Boot Multi Module, Gradle, JPA](https://youngthugg.tistory.com/37)
-    2. [Gradle 기반 멀티 모듈 구성하기](https://cheese10yun.github.io/gradle-multi-module/)
-    3. [GRPC documentation](https://grpc.io/docs/languages/java/)
-    4. [Grpc 사용법](https://velog.io/@chb1828/Spring-boot%EB%A1%9C-Grpc%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EC%9E%90)
-    5. [공공 open api 사용](https://oopsys.tistory.com/265)
-
+gradle multi module + grpc skeleton code 작성하여. 사용법 습득
 
 ## 로컬 환경 설정
 * intellij
@@ -61,4 +54,10 @@
     * weather api (정부 open api 연동)
       - [기상청_수치모델자료(경량화) 조회서비스](https://www.data.go.kr/data/15043588/openapi.do)
     
+## 참고 레퍼런스
+1. [Spring Boot Multi Module, Gradle, JPA](https://youngthugg.tistory.com/37)
+2. [Gradle 기반 멀티 모듈 구성하기](https://cheese10yun.github.io/gradle-multi-module/)
+3. [GRPC documentation](https://grpc.io/docs/languages/java/)
+4. [Grpc 사용법](https://velog.io/@chb1828/Spring-boot%EB%A1%9C-Grpc%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EC%9E%90)
+5. [공공 open api 사용](https://oopsys.tistory.com/265)
 
